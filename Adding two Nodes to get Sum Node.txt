@@ -1,0 +1,36 @@
+		//Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+        //Output: 7 -> 0 -> 8
+        //Explanation: 342 + 465 = 807.
+
+        public static Node SumNode(Node node1, Node node2)
+        {
+            Node current1 = node1;
+            Node current2 = node2;
+            Node sumNode = new Node();
+            Node currentSumNode = sumNode;
+            int sum = 0, remainder = 0;
+            while (current1 != null || current2 != null)
+            {
+                sum = (current1 == null ? 0 : current1.data) + (current2 == null ? 0 : current2.data) + remainder;
+
+                remainder = sum / 10;
+
+                Node newNode = new Node();
+                newNode.data = sum % 10;
+
+                currentSumNode.right = newNode;
+                currentSumNode = currentSumNode.right;
+
+                if(current1 != null)
+                    current1 = current1.right;
+                if(current2 != null)
+                    current2 = current2.right;
+            }
+            if(remainder > 1)
+            {
+                Node newNode = new Node();
+                newNode.data = remainder;
+                currentSumNode.right = newNode;
+            }
+            return sumNode.right;
+        }
